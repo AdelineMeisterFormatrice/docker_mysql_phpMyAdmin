@@ -18,10 +18,10 @@ services:
         image: mysql:8.0
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: mot_de_passe_root
             MYSQL_DATABASE: nom_base_donnee
-            MYSQL_USER: adeline
-            MYSQL_PASSWORD: 1234
+            MYSQL_USER: identifiant_utilsateur
+            MYSQL_PASSWORD: mot_de_passe_utilisateur
         ports:
             - "6033:3306"
         volumes:

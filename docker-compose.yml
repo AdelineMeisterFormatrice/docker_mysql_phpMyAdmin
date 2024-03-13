@@ -1,49 +1,33 @@
-version: '3'
-
-networks:
-    mysql-phpmyadmin:
-        name: mysql-phpmyadmin
-        driver: bridge
-
-volumes:
-    mysqldata:
-        driver: local
-        driver_opts:
-            type: 'none'
-            o: 'bind'
-            device: '${HOME}/server/mysql-phpmyadmin/data'
-
+version: '3.2'
+ 
 services:
     mysql:
         image: mysql:8.0
+        restart: always
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: mot_de_passe_root
+            MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: nom_base_donnee
-            MYSQL_USER: identifiant_utilsateur
-            MYSQL_PASSWORD: mot_de_passe_utilisateur
-        ports:
-            - "6033:3306"
+            MYSQL_USER: adeline
+            MYSQL_PASSWORD: 1234
         volumes:
-            - mysqldata:/var/lib/mysql
+            - ../data/mysql:/var/lib/mysql
         networks:
-            mysql-phpmyadmin:
-                aliases:
-                    - mysql
+            - phpmyadmin_net
     phpmyadmin:
         image: phpmyadmin:5.2.0
+        restart: always
         container_name: phpmyadmin
-        links:
-            - mysql
         environment:
             PMA_HOST: mysql
-            PMA_PORT: 3306
         ports:
             - 8081:80
         networks:
-            mysql-phpmyadmin:
-                aliases:
-                    - phpmyadmin
+            - phpmyadmin_net
+
+networks:
+    phpmyadmin_net:
+        driver: bridge
 
 
 
